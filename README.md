@@ -1,7 +1,9 @@
 # istio-infra-lab
-Hands-on lab for exploring Istio service mesh in Kubernetes-based cloud-native environments. This repository documents research-driven experiments and practices to optimize traffic management, enhance observability, and strengthen security features of Istio, based on my recent work experience and created for graduate school applications.
+This repository is a hands-on lab for exploring the Istio service mesh in Kubernetes-based cloud-native environments, documenting research-driven experiments and best practices from my recent professional experience. It focuses on optimizing traffic management, enhancing observability, and strengthening security-curated for graduate school applications.
+
 
 ## Overview
+This portfolio consolidates my recent applied experience with Istio, including ConfigMap and Secret centralization, VirtualService configuration, and practical labs focused on traffic management, observability, and security. It highlights my technical expertise and directly aligns with my graduate research interests in optimizing distributed network systems.
 
 
 ## Practical Context
@@ -20,4 +22,4 @@ This lab is informed by my backend development experience, where I worked on:
 
 ---
 
-> This repository is part of a personal effort to deepen expertise in cloud-native infrastructure and modern DevOps practices.
+> This repository reflects my personal commitment to deepening expertise in cloud-native infrastructure and modern DevOps practices.
