@@ -30,7 +30,6 @@ subjectAltName = @alt_names
 [alt_names]
 IP.1 = [myip]
 ```
-> Check CN, IP.1
 
 > Replace the IP address with the one you use for Harbor (e.g., your local or fixed IP).
 
@@ -76,5 +75,39 @@ docker login https://[myip]
 docker tag traffic-app:v1 [myip]/istio-lab/traffic-app:v1
 docker push [myip]/istio-lab/traffic-app:v1
 
+## 9. Create k3d Cluster with Harbor Certificate (When IP Changes)
+If your local IP changes and you regenerate your Harbor certificate, you also need to mount the new certificate into the cluster:
+
+```
+k3d cluster create istio-lab \
+  --api-port 6550 \
+  -p "8081:80@loadbalancer" \
+  -p "8444:443@loadbalancer" \
+  --volume ~/.docker/certs.d/[myip]/ca.crt:/etc/ssl/certs/ca-certificates.crt
+```
+> Make sure port 8081 and 8444 do not conflict with other services.
+This mounts the updated certificate into the container so it can verify Harbor’s TLS.
+
+## 10. Restart Harbor
+check process 4
+
+## 11. Apply Kubernetes Deployment
+(opt) You may need to recreate the namespace if it was deleted:
+```
+kubectl create namespace dev-lab
+```
+> check your namespace
+
+Apply
+```
+kubectl apply -f deployment-v1.yaml
+kubectl apply -f deployment-v2.yaml
+```
+
+## 12. Verify Deployment
+```
+kubectl get pods -n dev-lab -w
+```
+> Pods should eventually show STATUS: Running.
 
 •	If your IP address changes, you must regenerate the certificate with the new IP in SAN.
