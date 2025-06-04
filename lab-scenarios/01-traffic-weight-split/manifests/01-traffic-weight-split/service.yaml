@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dev-traffic-sv
+  namespace: dev-lab
+spec:
+  selector:
+    app: dev-traffic-online
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP

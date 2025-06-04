@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: dev-traffic-np
+  namespace: istio-system
+spec:
+  podSelector:
+    matchLabels:
+      app: istio-ingressgateway
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - ipBlock:
+            cidr: 172.18.0.0/16  # 로드밸런서 네트워크 (K3d 네트워크 범위)
+      ports:
+        - protocol: TCP
+          port: 8080

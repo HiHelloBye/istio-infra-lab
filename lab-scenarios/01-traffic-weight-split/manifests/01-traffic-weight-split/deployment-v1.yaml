@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev-traffic-online
+  namespace: dev-lab
+  labels:
+    app: dev-traffic-online
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dev-traffic-online
+      version: v1
+  template:
+    metadata:
+      name: dev-traffic-online
+      labels:
+        app: dev-traffic-online
+        version: v1 # matchLabels 와 일치해야 함
+    spec:
+      containers:
+        - name: dev-container
+          image: 172.30.99.3/istio-lab/traffic-app:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+      imagePullSecrets:
+        - name: harbor-secret
+      restartPolicy: Always

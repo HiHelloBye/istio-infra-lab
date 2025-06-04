@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: dev-traffic-vs
+  namespace: dev-lab
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - istio-system/dev-traffic-gateway
+  http:
+    - route:
+        - destination:
+            host: dev-traffic-sv
+            subset: v1
