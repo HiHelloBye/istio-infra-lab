@@ -81,9 +81,16 @@ If your local IP changes and you regenerate your Harbor certificate, you also ne
 ```
 k3d cluster create istio-lab \
   --api-port 6550 \
-  -p "8081:80@loadbalancer" \
-  -p "8444:443@loadbalancer" \
-  --volume ~/.docker/certs.d/[myip]/ca.crt:/etc/ssl/certs/ca-certificates.crt
+  -p "30100:8080@loadbalancer" \
+  -p "8443:443@loadbalancer" \
+  --volume $(pwd)/custom-ca.crt:/etc/ssl/certs/ca-certificates.crt \
+  --k3s-arg "--disable=traefik@server:0" \
+  --network k3d-istio-lab \
+  --k3s-arg "--cluster-cidr=10.42.0.0/16@server:0" \
+  --k3s-arg "--service-cidr=10.43.0.0/16@server:0" \
+  --k3s-arg "--node-ip=172.19.0.4@server:0" \
+  --k3s-arg "--flannel-backend=host-gw@server:0" \
+  --verbose
 ```
 > Make sure port 8081 and 8444 do not conflict with other services.
 This mounts the updated certificate into the container so it can verify Harbor’s TLS.
